@@ -118,6 +118,7 @@ api.getMember = {
       .exec();
 
     if (!member) throw new NotFound(res.t('userWithIDNotFound', { userId: memberId }));
+    if (member.auth.blocked) throw new NotFound(res.t('userNotFound'));
 
     if (!member.flags.verifiedUsername) member.auth.local.username = null;
 
@@ -148,6 +149,7 @@ api.getMemberByUsername = {
       .exec();
 
     if (!member) throw new NotFound(res.t('userNotFound'));
+    if (member.auth.blocked) throw new NotFound(res.t('userNotFound'));
 
     // manually call toJSON with minimize: true so empty paths aren't returned
     const memberToJSON = member.toJSON({ minimize: true });
@@ -266,6 +268,7 @@ api.getMemberAchievements = {
       .exec();
 
     if (!member) throw new NotFound(res.t('userWithIDNotFound', { userId: memberId }));
+    if (member.auth.blocked) throw new NotFound(res.t('userNotFound'));
 
     const achievsObject = achievements.getAchievementsForProfile(member, req.language);
 
