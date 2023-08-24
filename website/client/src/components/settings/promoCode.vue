@@ -11,6 +11,7 @@
           class="form-control"
           type="text"
           :placeholder="$t('promoPlaceholder')"
+          style="margin-right: 10px;"
         >
         <button
           class="btn btn-primary"
